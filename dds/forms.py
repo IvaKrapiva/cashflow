@@ -1,5 +1,6 @@
 from django import forms
 from .models import CashFlow, Category, Subcategory, Status, Type
+from django.utils import timezone
 
 class CashFlowForm(forms.ModelForm):
     class Meta:
@@ -41,12 +42,29 @@ class CashFlowForm(forms.ModelForm):
         category = cleaned_data.get('category')
         subcategory = cleaned_data.get('subcategory')
         type_ = cleaned_data.get('type')
+        amount = cleaned_data.get('amount')
+        created_at = cleaned_data.get('created_at')
+
+        # Проверка соответствия типа и категории
         if category and type_ and category.type != type_:
             self.add_error('category', 'Категория не соответствует выбранному типу.')
+
+        # Проверка соответствия категории и подкатегории
         if subcategory and category and subcategory.category != category:
             self.add_error('subcategory', 'Подкатегория не соответствует выбранной категории.')
-        if not cleaned_data.get('amount'):
+
+        # Обязательность суммы
+        if not amount:
             self.add_error('amount', 'Поле "Сумма" обязательно.')
+
+        # Проверка: сумма не может быть отрицательной
+        if amount is not None and amount < 0:
+            self.add_error('amount', 'Сумма не может быть отрицательной.')
+
+        # Проверка: дата не может быть в будущем
+        if created_at and created_at > timezone.now().date():
+            self.add_error('created_at', 'Дата не может быть в будущем.')
+
         return cleaned_data
 
 class StatusForm(forms.ModelForm):
