@@ -22,6 +22,11 @@ Visual Studio Code (редактирование кода)
 SQLPro for SQLite (управление базой данных)
 Terminal (встроенный в macOS)
 
+Зависимости:
+Python 3.9 или новее.
+Django 4.2 или новее.
+Bootstrap 5.3 (через CDN).
+
 
 
 
@@ -48,7 +53,9 @@ Terminal (встроенный в macOS)
 Активируйте его:source venv/bin/activate
 
 
-
+Установка зависимостей:
+Установите необходимые пакеты: pip install django==5.2.1
+Если есть файл requirements.txt, выполните: pip install -r requirements.txt
 
 Настройка базы данных:
 
@@ -179,57 +186,3 @@ templates/dds/: Шаблоны HTML.
 
 
 db.sqlite3: Файл базы данных SQLite.
-
-Добавление новых функций
-
-Создание новой модели:
-Откройте dds/models.py и добавьте новую модель:class NewModel(models.Model):
-    name = models.CharField(max_length=100)
-    def __str__(self):
-        return self.name
-
-
-Создайте миграции:python3 manage.py makemigrations
-python3 manage.py migrate
-
-
-
-
-Добавление маршрута:
-В dds/urls.py добавьте новый маршрут:path('newmodel/', views.newmodel_list, name='newmodel_list'),
-
-
-В dds/views.py создайте представление:def newmodel_list(request):
-    newmodels = NewModel.objects.all()
-    return render(request, 'dds/newmodel_list.html', {'newmodels': newmodels})
-
-
-
-
-Создание шаблона:
-Создайте файл templates/dds/newmodel_list.html:<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Список новых моделей</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <h1 class="mt-4">Список новых моделей</h1>
-        <table class="table table-striped">
-            <thead>
-                <tr><th>Название</th></tr>
-            </thead>
-            <tbody>
-                {% for model in newmodels %}
-                    <tr><td>{{ model.name }}</td></tr>
-                {% empty %}
-                    <tr><td class="text-center">Записи отсутствуют</td></tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
