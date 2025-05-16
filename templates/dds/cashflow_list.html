@@ -7,22 +7,26 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-4">Движение денежных средств</h1>
+        <h1 class="mt-4">Движение денежных средств <span class="badge bg-warning text-dark">Бета</span></h1>
         
         <!-- Навигационная панель с кнопками -->
         <div class="mb-3">
             <h4>Справочники</h4>
             <div class="btn-group mb-2">
                 <a href="{% url 'type_list' %}" class="btn btn-outline-primary">Типы</a>
-                <a href="{% url 'type_create' %}" class="btn btn-primary">Добавить тип</a>
+                <a href="{% url 'type_create' %}" class="btn btn-primary">+</a>
             </div>
             <div class="btn-group mb-2">
                 <a href="{% url 'category_list' %}" class="btn btn-outline-primary">Категории</a>
-                <a href="{% url 'category_create' %}" class="btn btn-primary">Добавить категорию</a>
+                <a href="{% url 'category_create' %}" class="btn btn-primary">+</a>
             </div>
             <div class="btn-group mb-2">
                 <a href="{% url 'subcategory_list' %}" class="btn btn-outline-primary">Подкатегории</a>
-                <a href="{% url 'subcategory_create' %}" class="btn btn-primary">Добавить подкатегорию</a>
+                <a href="{% url 'subcategory_create' %}" class="btn btn-primary">+</a>
+            </div>
+            <div class="btn-group mb-2">
+                <a href="{% url 'status_list' %}" class="btn btn-outline-primary">Статусы</a>
+                <a href="{% url 'status_create' %}" class="btn btn-primary">+</a>
             </div>
         </div>
 
@@ -106,7 +110,7 @@
                         <td>{{ cashflow.type }}</td>
                         <td>{{ cashflow.category }}</td>
                         <td>{{ cashflow.subcategory|default:"—" }}</td>
-                        <td>{{ cashflow.status }}</td>
+                        <td>{{ cashflow.status|default:"—" }}</td>
                         <td>
                             <a href="{% url 'cashflow_edit' cashflow.pk %}" class="btn btn-sm btn-warning">Редактировать</a>
                             <a href="{% url 'cashflow_delete' cashflow.pk %}" class="btn btn-sm btn-danger">Удалить</a>
@@ -119,5 +123,4 @@
         </table>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
 </html>
