@@ -99,6 +99,7 @@
                     <th>Категория</th>
                     <th>Подкатегория</th>
                     <th>Статус</th>
+                    <th>Комментарий</th>
                     <th>Действия</th>
                 </tr>
             </thead>
@@ -111,6 +112,7 @@
                         <td>{{ cashflow.category }}</td>
                         <td>{{ cashflow.subcategory|default:"—" }}</td>
                         <td>{{ cashflow.status|default:"—" }}</td>
+                        <td>{{ cashflow.comment|default:"—" }}</td>
                         <td>
                             <a href="{% url 'cashflow_edit' cashflow.pk %}" class="btn btn-sm btn-warning">Редактировать</a>
                             <a href="{% url 'cashflow_delete' cashflow.pk %}" class="btn btn-sm btn-danger">Удалить</a>
